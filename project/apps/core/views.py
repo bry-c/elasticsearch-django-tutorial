@@ -122,13 +122,13 @@ class HomePageView(TemplateView):
                     }
                 )
         return {
-            'filtered': {
-                'query': {'match_all': {}},
-                'filter': {
-                    'bool': {
-                        'must': filters
-                    }
+            "bool": {
+              "must": [
+                {
+                  "match_all": {}
                 }
+              ],
+              "filter": filters
             }
         }
 
