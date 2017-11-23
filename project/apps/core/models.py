@@ -67,14 +67,15 @@ class Student(models.Model):
                 'first_name': {'type': 'string', 'index': 'not_analyzed'},
                 'last_name': {'type': 'string', 'index': 'not_analyzed'},
                 'age': {'type': 'short'},
-                'year_in_school': {'type': 'string'},
+                'year_in_school': {'type': 'string', 'index': 'not_analyzed'},
                 'name_complete': {
                     'type': 'completion',  # you have to make a method for completition for sure!
                     'analyzer': 'simple',
-                    'payloads': True,  # note that we have to provide payload while updating
+                    # 'payloads': True,  # note that we have to provide payload while updating
                     'preserve_separators': True,
                     'preserve_position_increments': True,
                     'max_input_length': 50,
+
                 },
                 "course_names": {
                     "type": "string", "store": "yes", "index": "not_analyzed",
@@ -109,8 +110,8 @@ class Student(models.Model):
     def get_es_name_complete(self):
         return {
             "input": [self.first_name, self.last_name],
-            "output": "%s %s" % (self.first_name, self.last_name),
-            "payload": {"pk": self.pk},
+            # "output": "%s %s" % (self.first_name, self.last_name),
+            # "payload": {"pk": self.pk},
         }
 
     def get_es_course_names(self):

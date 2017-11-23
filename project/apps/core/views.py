@@ -26,7 +26,7 @@ class HomePageView(TemplateView):
             'aggs': {
                 'course_names': {
                     'terms': {
-                        'field': 'course_names', 'size': 0
+                        'field': 'course_names', 'size': 1
                     }
                 },
                 'university__name': {
@@ -199,7 +199,7 @@ def autocomplete_view(request):
     )
     options = resp['name_complete'][0]['options']
     data = json.dumps(
-        [{'id': i['payload']['pk'], 'value': i['text']} for i in options]
+        [{'id': i['_id'], 'value': i['text']} for i in options]
     )
     mimetype = 'application/json'
     return HttpResponse(data, mimetype)
